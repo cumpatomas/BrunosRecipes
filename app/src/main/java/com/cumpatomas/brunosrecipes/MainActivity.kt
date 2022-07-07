@@ -1,19 +1,15 @@
 package com.cumpatomas.brunosrecipes
 
-import android.annotation.SuppressLint
 import android.os.Bundle
 import android.text.method.ScrollingMovementMethod
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
-import androidx.core.graphics.component1
-import androidx.core.view.get
 import androidx.core.view.isGone
 import androidx.core.view.isVisible
 import androidx.lifecycle.lifecycleScope
 import com.cumpatomas.brunosrecipes.databinding.ActivityMainBinding
 import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.launch
-import java.nio.file.Files.find
 
 
 class MainActivity : AppCompatActivity() {
@@ -58,6 +54,10 @@ class MainActivity : AppCompatActivity() {
                     getRecipesList()
                     true
                 }
+                item.itemId == R.id.btBottomInput -> {
+
+                    true
+                }
 
                 else -> false
             }
@@ -69,21 +69,24 @@ class MainActivity : AppCompatActivity() {
     private fun goHome() {
 
         binding.menuContainer.isVisible = true
-        binding.tvTextContainer.isGone = false
+        binding.tvTextContainer.isGone = true
+        binding.tvRandomRecipeName.isGone = true
+        binding.tvMenuTitle.text = getString(R.string.menutitle)
 
     }
 
     private fun getRandomRecipe() {
         binding.tvMenuTitle.text = getString(R.string.randomTitle)
         binding.menuContainer.isGone = true
-        binding.tvTextContainer.isVisible = true
-        binding.tvTextContainer.background = getDrawable(R.drawable.menu_background)
+        binding.tvTextContainer.isGone = true
+        binding.tvRandomRecipeName.isVisible = true
+
 
         model.sendRandomRecipe()
 
         lifecycleScope.launch {
             model.randomRecipe.collect { randomRecipe ->
-                binding.tvTextContainer.text = randomRecipe.name
+                binding.tvRandomRecipeName.text = randomRecipe.name
 
             }
         }
@@ -94,9 +97,10 @@ class MainActivity : AppCompatActivity() {
         binding.tvMenuTitle.text = getString(R.string.recipesTitle)
         binding.menuContainer.isGone = true
         binding.tvTextContainer.isVisible = true
+        binding.tvRandomRecipeName.isGone = true
         binding.tvTextContainer.background = getDrawable(R.drawable.menu_background)
         binding.tvTextContainer.movementMethod = ScrollingMovementMethod()
-        model.fullList()
+        model.getFullList()
         lifecycleScope.launch {
             model.recipeModel.collect { recipeList ->
                 binding.tvTextContainer.text = recipeList
@@ -112,7 +116,7 @@ class MainActivity : AppCompatActivity() {
 /*
 Ideas:
 - Present a photo of the dish in the Random option
-- Make every item in the list clickable as an object to see ingredients and photos
+- Make every item in the list clickable as an object to see ingredients and photos in a new UI
 - The last option "Input Ingredients" is for the user to input the ingredients he/she has and get a list of possible recipes from the list
 
 
