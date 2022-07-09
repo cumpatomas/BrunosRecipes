@@ -11,7 +11,7 @@ fun getRecipesList(): String {
     for (i in list) {
         _list.add(i.name)
     }
-    return _list.toString().replace("[", "").replace("]", "").replace(", ", "\n\n")
+    return _list.joinToString().replace(", ", "\n\n")
 }
     val list = listOf<recipeModel>(
 

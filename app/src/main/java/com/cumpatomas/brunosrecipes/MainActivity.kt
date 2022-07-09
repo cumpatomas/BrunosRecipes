@@ -30,7 +30,8 @@ class MainActivity : AppCompatActivity() {
     private fun initListeners() {
 
         binding.btRecipesList.setOnClickListener {
-            binding.bottomNavigation.selectedItemId = R.id.btBottomList // Formula to make menu item active!!
+            binding.bottomNavigation.selectedItemId =
+                R.id.btBottomList // Formula to make menu item active!!
             getRecipesList()
         }
 
@@ -115,9 +116,10 @@ class MainActivity : AppCompatActivity() {
 }
 /*
 Ideas:
+
 - Present a photo of the dish in the Random option
 - Make every item in the list clickable as an object to see ingredients and photos in a new UI
 - The last option "Input Ingredients" is for the user to input the ingredients he/she has and get a list of possible recipes from the list
-
+-How do I organize the files in the project folders?
 
 */
