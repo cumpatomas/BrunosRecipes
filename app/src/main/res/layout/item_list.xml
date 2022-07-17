@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_margin="8dp"
+    android:background="@drawable/menu_background"
+    app:cardCornerRadius="8dp">
+
+        <ImageView
+            android:id="@+id/ivItemImage"
+            android:layout_width="80dp"
+            android:layout_height="60dp"
+            android:scaleType="centerCrop"
+            />
+
+    <TextView
+        android:id="@+id/tvItemName"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:fontFamily="@font/elephant"
+        android:paddingStart="10sp"
+        android:paddingTop="10sp"
+        android:textColor="@color/black"
+        android:textSize="15sp"
+        app:layout_constraintStart_toEndOf="@id/ivItemImage"
+        tools:text="Titulo" />
+
+    <TextView
+        android:id="@+id/tvItemIngredients"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:ellipsize="end"
+        android:fontFamily="@font/elephant"
+        android:maxLength="40"
+        android:maxLines="1"
+        android:paddingStart="10sp"
+        android:paddingEnd="10sp"
+        android:textSize="13sp"
+        android:textStyle="italic"
+        app:layout_constraintStart_toEndOf="@id/ivItemImage"
+        app:layout_constraintTop_toBottomOf="@id/tvItemName"
+        tools:text="Titulo" />
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>

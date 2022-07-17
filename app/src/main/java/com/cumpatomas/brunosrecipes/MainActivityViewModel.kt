@@ -11,21 +11,15 @@ class MainActivityViewModel : ViewModel() {
     private val _recipeModel = Channel<String>()
     val recipeModel = _recipeModel.receiveAsFlow()
 
-    private val _randomRecipe = Channel<recipeModel>()
+    private val _randomRecipe = Channel<RecipeModel>()
     val randomRecipe = _randomRecipe.receiveAsFlow()
 
-    fun getFullList() {
 
-        viewModelScope.launch {
-            _recipeModel.send(recipeProvider().getRecipesList())
-
-        }
-    }
 
     fun sendRandomRecipe() {
 
         viewModelScope.launch {
-            _randomRecipe.send(recipeProvider().getRandomRecipe())
+            _randomRecipe.send(RecipeProvider().getRandomRecipe())
 
         }
 

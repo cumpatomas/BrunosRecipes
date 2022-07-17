@@ -1,12 +1,20 @@
 package com.cumpatomas.brunosrecipes
 
-import android.os.Bundle
+import android.annotation.SuppressLint
+import  android.os.Bundle
 import android.text.method.ScrollingMovementMethod
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.isGone
 import androidx.core.view.isVisible
 import androidx.lifecycle.lifecycleScope
+import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.ListAdapter
+import com.bumptech.glide.Glide
+import com.bumptech.glide.load.resource.bitmap.CenterCrop
+import com.bumptech.glide.load.resource.bitmap.RoundedCorners
+import com.bumptech.glide.request.RequestOptions
+import com.cumpatomas.brunosrecipes.adapter.RecipeListAdapter
 import com.cumpatomas.brunosrecipes.databinding.ActivityMainBinding
 import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.launch
@@ -23,8 +31,14 @@ class MainActivity : AppCompatActivity() {
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
         supportActionBar?.hide()
+        initrecyclerView()
 
         initListeners()
+    }
+
+    private fun initrecyclerView() {
+        binding.rvListRecycler.layoutManager = LinearLayoutManager(this)
+        binding.rvListRecycler.adapter = RecipeListAdapter(RecipeProvider.list)
     }
 
     private fun initListeners() {
@@ -73,6 +87,8 @@ class MainActivity : AppCompatActivity() {
         binding.tvTextContainer.isGone = true
         binding.tvRandomRecipeName.isGone = true
         binding.tvMenuTitle.text = getString(R.string.menutitle)
+        binding.rvListRecycler.isGone = true
+        binding.ivRandomImage.isGone = true
 
     }
 
@@ -81,6 +97,8 @@ class MainActivity : AppCompatActivity() {
         binding.menuContainer.isGone = true
         binding.tvTextContainer.isGone = true
         binding.tvRandomRecipeName.isVisible = true
+        binding.rvListRecycler.isGone = true
+        binding.ivRandomImage.isVisible = true
 
 
         model.sendRandomRecipe()
@@ -88,32 +106,34 @@ class MainActivity : AppCompatActivity() {
         lifecycleScope.launch {
             model.randomRecipe.collect { randomRecipe ->
                 binding.tvRandomRecipeName.text = randomRecipe.name
+                Glide.with(binding.ivRandomImage.context)
+                    .load(randomRecipe.photo)
+                    .apply(RequestOptions().transform(CenterCrop(), RoundedCorners(18)))
+                    .into(binding.ivRandomImage)
 
             }
         }
     }
 
 
+    @SuppressLint("UseCompatLoadingForDrawables")
     private fun getRecipesList() {
         binding.tvMenuTitle.text = getString(R.string.recipesTitle)
         binding.menuContainer.isGone = true
-        binding.tvTextContainer.isVisible = true
+        binding.rvListRecycler.isVisible = true
         binding.tvRandomRecipeName.isGone = true
+        binding.ivRandomImage.isGone = true
         binding.tvTextContainer.background = getDrawable(R.drawable.menu_background)
         binding.tvTextContainer.movementMethod = ScrollingMovementMethod()
-        model.getFullList()
-        lifecycleScope.launch {
-            model.recipeModel.collect { recipeList ->
-                binding.tvTextContainer.text = recipeList
 
-            }
+
         }
 
 
     }
 
 
-}
+
 /*
 Ideas:
 
